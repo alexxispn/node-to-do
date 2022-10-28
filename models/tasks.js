@@ -39,29 +39,6 @@ export default class Tasks {
         });
     }
 
-    // listDoneTasks(done = true) {
-    //     console.log();
-    //     let counter = 0;
-    //     this.listArr.forEach((task) => {
-    //             const {description, completed} = task;
-    //             const state = (completed)
-    //                 ? "Completed".green
-    //                 : "Pending".red;
-    //             if (done) {
-    //                 if (completed) {
-    //                     counter += 1;
-    //                     console.log(`${(counter + ".").green} ${description} -> ${state}`);
-    //                 }
-    //             } else {
-    //                 if (!completed) {
-    //                     counter += 1;
-    //                     console.log(`${(counter + ".").green} ${description} -> ${state}`);
-    //                 }
-    //             }
-    //         }
-    //     );
-    // }
-
     listDoneTasks(done = true) {
         console.log();
         let counter = 0;
@@ -83,6 +60,26 @@ export default class Tasks {
                 }
             }
         );
+    }
+
+    deleteTask(id = "") {
+        if (this._list[id]) {
+            delete this._list[id];
+        }
+    }
+
+    toggleCompleted(ids = []) {
+        ids.forEach(id => {
+            const task = this._list[id];
+            if (!task.completed) {
+                task.completed = new Date().toISOString();
+            }
+        });
+        this.listArr.forEach(task => {
+            if (!ids.includes(task.id)) {
+                this._list[task.id].completed = null;
+            }
+        });
     }
 
 }

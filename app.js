@@ -1,4 +1,4 @@
-import {inquirerMenu, pause, readInput} from "./helpers/inquirer.js";
+import {inquirerMenu, pause, readInput, showChecklist, listTasksDelete, confirm} from "./helpers/inquirer.js";
 import Tasks from "./models/tasks.js";
 import {readFile, saveFile} from "./helpers/saveFile.js";
 
@@ -26,6 +26,20 @@ const main = async () => {
                 break;
             case "4":
                 tasks.listDoneTasks(false);
+                break;
+            case "5":
+                const ids = await showChecklist(tasks.listArr);
+                tasks.toggleCompleted(ids);
+                break;
+            case "6":
+                const id = await listTasksDelete(tasks.listArr);
+                if (id !== "0") {
+                    const ok = await confirm("Are you sure?");
+                    if (ok) {
+                        tasks.deleteTask(id);
+                        console.log("Task deleted");
+                    }
+                }
                 break;
         }
         saveFile(tasks.listArr);
