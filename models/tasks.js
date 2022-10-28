@@ -50,7 +50,7 @@ export default class Tasks {
                 if (done) {
                     if (completed) {
                         counter += 1;
-                        console.log(`${(counter + ".").green} ${description} -> ${completed}`);
+                        console.log(`${(counter + ".").green} ${description} -> ${completed.green}`);
                     }
                 } else {
                     if (!completed) {
@@ -72,7 +72,9 @@ export default class Tasks {
         ids.forEach(id => {
             const task = this._list[id];
             if (!task.completed) {
-                task.completed = new Date().toISOString();
+                task.completed = new Date().toLocaleString('en-GB', {
+                    timeZone: 'Europe/London'
+                });
             }
         });
         this.listArr.forEach(task => {
